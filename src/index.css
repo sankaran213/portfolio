@@ -51,6 +51,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  cursor: none; /* Hide default cursor */
 }
 
 h1, h2, h3, h4, h5, h6, .section-title {
@@ -60,7 +61,7 @@ h1, h2, h3, h4, h5, h6, .section-title {
 }
 
 .section-title {
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
   margin-bottom: 4rem;
   text-align: center;
@@ -174,4 +175,41 @@ button {
 
 .card:hover::before {
   opacity: 1;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  
+  .mobile-toggle {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .section-title {
+    margin-bottom: 2.5rem;
+  }
+  
+  /* Hero Overrides */
+  .hero-h1 {
+    font-size: 15vw !important; /* Massive on mobile but contained */
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    width: 100%; /* Full width buttons on mobile usually look better */
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+  }
 }

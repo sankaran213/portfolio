@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
-import Projects from './components/Projects';
 import Education from './components/Education';
 import Footer from './components/Footer';
+import CustomCursor from './components/CustomCursor';
+import { SoundProvider } from './components/SoundContext';
 
 function App() {
   const [theme, setTheme] = useState('dark');
 
-  // Load theme from local storage
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
@@ -18,24 +19,27 @@ function App() {
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
   };
 
   return (
-    <div className="App">
-      <Header theme={theme} toggleTheme={toggleTheme} />
-      <main>
-        <Hero />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Education />
-      </main>
-      <Footer />
-    </div>
+    <SoundProvider>
+      <div className="App">
+        <CustomCursor />
+        <Header theme={theme} toggleTheme={toggleTheme} />
+        <main>
+          <Hero />
+          <Projects />
+          <Skills />
+          <Experience />
+          <Education />
+        </main>
+        <Footer />
+      </div>
+    </SoundProvider>
   );
 }
 

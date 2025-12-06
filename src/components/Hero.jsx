@@ -1,8 +1,12 @@
 import React from 'react';
 import CyberScene from './CyberScene';
 import { motion } from 'framer-motion';
+import useTypewriter from '../hooks/useTypewriter';
 
 const Hero = () => {
+  const { displayText } = useTypewriter("SANKARAN KUMAR", 100, 1000);
+  const { displayText: subText } = useTypewriter("ARCHITECTING THE FUTURE OF THE WEB", 50, 2500);
+
   return (
     <section id="home" style={{
       minHeight: '100vh',
@@ -38,60 +42,43 @@ const Hero = () => {
           System Online
         </motion.div>
         
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          style={{
-            fontSize: 'clamp(3.5rem, 8vw, 7rem)',
-            fontWeight: 700,
-            lineHeight: 1,
-            marginBottom: '1rem',
-            background: 'linear-gradient(to bottom, var(--text-primary), var(--text-secondary))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 0 40px rgba(6, 182, 212, 0.3)',
-          }}
-        >
-          SANKARAN
-        </motion.h1>
-
-         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          style={{
-            fontSize: 'clamp(3.5rem, 8vw, 7rem)',
-            fontWeight: 700,
-            lineHeight: 1,
-            marginBottom: '2rem',
-            color: 'transparent',
-            WebkitTextStroke: '2px var(--accent)',
-            fontFamily: 'var(--font-display)'
-          }}
-        >
-          KUMAR
-        </motion.h1>
+        {/* Main Title Wrapper to prevent layout shift */}
+        <div style={{ minHeight: 'clamp(3.5rem, 8vw, 7rem)', marginBottom: '1rem' }}>
+          <h1
+            style={{
+              fontSize: 'clamp(3.5rem, 8vw, 7rem)',
+              fontWeight: 700,
+              lineHeight: 1,
+              background: 'linear-gradient(to bottom, var(--text-primary), var(--text-secondary))',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0 0 40px rgba(6, 182, 212, 0.3)',
+              margin: 0
+            }}
+          >
+            {displayText}<span className="blink-cursor">_</span>
+          </h1>
+        </div>
         
-        <motion.h2
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          style={{
-            fontSize: 'clamp(1.2rem, 3vw, 1.8rem)',
-            color: 'var(--text-secondary)',
-            marginBottom: '3rem',
-            fontFamily: 'var(--font-body)',
-            letterSpacing: '0.05em'
-          }}>
-          ARCHITECTING THE <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>FUTURE</span> OF THE WEB
-        </motion.h2>
+        <div style={{ minHeight: 'clamp(1.2rem, 3vw, 1.8rem)', marginBottom: '3rem' }}>
+           <h2
+            style={{
+              fontSize: 'clamp(1.2rem, 3vw, 1.8rem)',
+              color: 'var(--text-secondary)',
+              fontFamily: 'var(--font-body)',
+              letterSpacing: '0.05em',
+              margin: 0
+            }}>
+            {subText}
+          </h2>
+        </div>
         
         <motion.div
            initial={{ opacity: 0, y: 30 }}
            animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.8, delay: 0.6 }}
-           style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
+           transition={{ duration: 0.8, delay: 4 }} // Wait for typing
+           style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}
+        >
           <a href="#projects" className="btn btn-primary">
             Explore Sector
           </a>
@@ -100,6 +87,16 @@ const Hero = () => {
           </a>
         </motion.div>
       </div>
+      
+      <style>{`
+        .blink-cursor {
+          animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 };
