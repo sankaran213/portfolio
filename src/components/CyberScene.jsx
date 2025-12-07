@@ -1,27 +1,21 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Stars, Sphere, MeshDistortMaterial, ScrollControls, useScroll } from '@react-three/drei';
+import { Stars, Sky, Sphere, MeshDistortMaterial, Float } from '@react-three/drei';
 
-const Planet = () => {
+const NightObject = () => {
   const meshRef = useRef();
-  const scroll = useScroll();
   
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    // Base rotation
-    meshRef.current.rotation.y = t * 0.05;
-    
-    // Scroll interaction
-    // scroll.offset is 0 to 1
-    const offset = scroll.offset; 
-    meshRef.current.rotation.x = offset * Math.PI; // Rotate on X based on scroll
-    meshRef.current.rotation.z = offset * Math.PI * 0.5;
+    const scrollY = window.scrollY;
+    // Rotate 
+    meshRef.current.rotation.y = t * 0.05 + (scrollY * 0.001); 
+    meshRef.current.rotation.x = (scrollY * 0.0005);
   });
 
   return (
     <mesh ref={meshRef} scale={2.5}>
       <sphereGeometry args={[1, 64, 64]} />
-      {/* Holographic Wireframe aesthetic */}
       <meshStandardMaterial
         color="#06b6d4"
         wireframe
@@ -34,7 +28,34 @@ const Planet = () => {
   );
 };
 
-const CyberScene = () => {
+const DayObject = () => {
+    const meshRef = useRef();
+    
+    useFrame((state) => {
+      const t = state.clock.getElapsedTime();
+      meshRef.current.rotation.x = t * 0.2;
+      meshRef.current.rotation.y = t * 0.3;
+    });
+  
+    return (
+      <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+        <Sphere ref={meshRef} args={[1, 64, 64]} scale={2.2}>
+            <MeshDistortMaterial 
+                color="#38bdf8" 
+                attach="material" 
+                distort={0.6} 
+                speed={2} 
+                roughness={0.2}
+                metalness={0.1}
+            />
+        </Sphere>
+      </Float>
+    );
+  };
+
+const CyberScene = ({ theme }) => {
+  const isDark = theme === 'dark';
+
   return (
     <div style={{
       position: 'absolute',
@@ -44,64 +65,29 @@ const CyberScene = () => {
       height: '100%',
       zIndex: 0,
       pointerEvents: 'none',
-      background: 'black' // Fallback
+      background: isDark ? '#030712' : '#f0f9ff' 
     }}>
       <Canvas camera={{ position: [0, 0, 7] }}>
-        <color attach="background" args={['#030712']} />
+        <color attach="background" args={[isDark ? '#030712' : '#f0f9ff']} />
         
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#8b5cf6" />
-        <pointLight position={[-10, -10, -10]} intensity={1} color="#06b6d4" />
+        <ambientLight intensity={isDark ? 0.5 : 1} />
+        <pointLight position={[10, 10, 10]} intensity={1} color={isDark ? "#8b5cf6" : "#ffffff"} />
+        <pointLight position={[-10, -10, -10]} intensity={1} color={isDark ? "#06b6d4" : "#38bdf8"} />
 
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-        
-        {/* ScrollControls must wrap the scrollable content or be used to drive generic values.
-            However, ScrollControls usually create a DOM scroll overlay which we DON'T want here 
-            because we are using standard HTML scrolling. 
-            Standard HTML scroll driving R3F is tricky without useScroll from drei inside ScrollControls 
-            OVERLAYING the content. 
-            
-            ALTERNATE APPROACH: Just pass window.scrollY to the component logic or simpler:
-            We will skip ScrollControls wrapper which hijacks scroll, and just use a customized hook or direct prop 
-            if we want true sync.
-            
-            BUT simplest way for "React Three Fiber" scroll integration without hijacking native scroll 
-            is often just listening to window scroll in a component or using a library like Lenis + R3F.
-            
-            FOR THIS IMPLEMENTATION: I will simply use a custom hook inside Planet to read window.scrollY for simplicity 
-            and robustness without altering the page scroll behavior aggressively.
-        */}
-        <ScrollAwarePlanet />
+        {isDark ? (
+           <>
+             <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+             <NightObject />
+           </>
+        ) : (
+           <>
+             <Sky distance={450000} sunPosition={[0, 1, 0]} inclination={0} azimuth={0.25} />
+             <DayObject />
+           </>
+        )}
       </Canvas>
     </div>
   );
 };
-
-const ScrollAwarePlanet = () => {
-   const meshRef = useRef();
-
-   useFrame((state) => {
-     const t = state.clock.getElapsedTime();
-     const scrollY = window.scrollY; // Crude but effective for background
-     const scrollProgress = scrollY / (document.body.scrollHeight - window.innerHeight || 1);
-     
-     meshRef.current.rotation.y = t * 0.05 + (scrollProgress * 5); // Speed up rotation with scroll
-     meshRef.current.rotation.x = scrollProgress * 2;
-   });
-
-   return (
-    <mesh ref={meshRef} scale={2.5}>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial
-        color="#06b6d4"
-        wireframe
-        emissive="#06b6d4"
-        emissiveIntensity={0.5}
-        transparent
-        opacity={0.3}
-      />
-    </mesh>
-   );
-}
 
 export default CyberScene;

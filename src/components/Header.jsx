@@ -36,7 +36,9 @@ const Header = ({ theme, toggleTheme }) => {
         top: 0,
         zIndex: 1000,
         transition: 'all 0.4s ease',
-        background: isScrolled ? 'rgba(3, 7, 18, 0.95)' : 'transparent',
+        background: isScrolled 
+          ? (theme === 'dark' ? 'rgba(3, 7, 18, 0.95)' : 'rgba(255, 255, 255, 0.9)') 
+          : 'transparent',
         backdropFilter: isScrolled ? 'blur(16px)' : 'none',
         padding: isScrolled ? '1rem 0' : '1.5rem 0',
         borderBottom: isScrolled ? '1px solid var(--border)' : '1px solid transparent'

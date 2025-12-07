@@ -31,7 +31,7 @@ function App() {
         <CustomCursor />
         <Header theme={theme} toggleTheme={toggleTheme} />
         <main>
-          <Hero />
+          <Hero theme={theme} />
           <Projects />
           <Skills />
           <Experience />

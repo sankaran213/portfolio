@@ -1,41 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Deep Space Theme */
-  --bg-primary: #030712; /* Void Black */
-  --bg-secondary: #0b1121; /* Deep Space Blue */
-  --text-primary: #e2e8f0; /* Starlight White */
-  --text-secondary: #94a3b8; /* Nebula Grey */
+  /* Deep Space Theme - Pure Dark */
+  --bg-primary: #050505; /* Deep Void Black - Removed Blue Tint */
+  --bg-secondary: #111111; /* Onyx */
+  --text-primary: #f8fafc; /* Pure White */
+  --text-secondary: #a3a3a3; /* Neutral Steel */
   
   --accent: #06b6d4; /* Cyan Neon */
   --accent-secondary: #8b5cf6; /* Galaxy Purple */
   --accent-glow: rgba(6, 182, 212, 0.4);
   
   --gradient: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-  --card-bg: rgba(11, 17, 33, 0.6);
-  --border: rgba(6, 182, 212, 0.2); /* Cyan border for hologram effect */
+  --card-bg: rgba(20, 20, 20, 0.6);
+  --border: rgba(6, 182, 212, 0.2); 
   
   --font-display: 'Rajdhani', sans-serif;
   --font-body: 'Space Grotesk', sans-serif;
   
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --radius: 12px; /* Tech/sharp corners */
+  --radius: 12px; 
 }
 
-/* Light Mode Override (Future Lab Aesthetic) */
+/* Light Mode Override (Sky Aesthetic) */
 [data-theme='light'] {
-  --bg-primary: #f0f9ff;
-  --bg-secondary: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --bg-primary: #ffffff; /* Pure White */
+  --bg-secondary: #f0f9ff; /* Very Pale Sky Blue */
+  --text-primary: #0f172a; /* Slate 900 */
+  --text-secondary: #475569; /* Slate 600 */
   
-  --accent: #0891b2;
-  --accent-secondary: #7c3aed;
-  --accent-glow: rgba(8, 145, 178, 0.2);
+  --accent: #0ea5e9; /* Sky Blue 500 */
+  --accent-secondary: #6366f1; /* Indigo 500 */
+  --accent-glow: rgba(14, 165, 233, 0.25);
   
-  --gradient: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%);
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --border: rgba(8, 145, 178, 0.15);
+  --gradient: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --border: rgba(14, 165, 233, 0.15);
 }
 
 * {

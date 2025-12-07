@@ -4,8 +4,15 @@ import { motion } from 'framer-motion';
 const CustomCursor = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Check if device has fine pointer (mouse)
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+    setIsVisible(isFinePointer);
+
+    if (!isFinePointer) return;
+
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -26,6 +33,8 @@ const CustomCursor = () => {
       window.removeEventListener('mouseover', handleMouseOver);
     };
   }, []);
+
+  if (!isVisible) return null;
 
   return (
     <>

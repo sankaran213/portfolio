@@ -3,7 +3,7 @@ import CyberScene from './CyberScene';
 import { motion } from 'framer-motion';
 import useTypewriter from '../hooks/useTypewriter';
 
-const Hero = () => {
+const Hero = ({ theme }) => {
   const { displayText } = useTypewriter("SANKARAN KUMAR", 100, 1000);
   const { displayText: subText } = useTypewriter("ARCHITECTING THE FUTURE OF THE WEB", 50, 2500);
 
@@ -16,7 +16,7 @@ const Hero = () => {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      <CyberScene />
+      <CyberScene theme={theme} />
 
       <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
         <motion.div
